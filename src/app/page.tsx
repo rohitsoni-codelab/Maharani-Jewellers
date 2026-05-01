@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import HeroSlider from '@/components/ui/HeroSlider';
 import { getProducts } from '@/lib/dataFetcher';
+import MapSection from '@/components/ui/MapSection';
 
 export default async function Home() {
   const products = await getProducts();
@@ -61,49 +62,7 @@ export default async function Home() {
 
       <TrustBadges />
 
-      {/* Map Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="font-playfair text-3xl md:text-4xl text-brand-black mb-4">Visit Our Store in Katrash, Dhanbad</h2>
-            <p className="text-gray-600">Located at Bhelatand Mor, Katrash. Experience our premium collection in person.</p>
-          </div>
-          <div className="max-w-4xl mx-auto bg-brand-light p-4 rounded-3xl shadow-sm">
-            <div className="aspect-video w-full rounded-2xl overflow-hidden relative bg-gray-200">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14603.250550085444!2d86.41725515!3d23.7957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f6a70a842eb351%3A0x6b74e7fc7868832a!2sDhanbad%2C%20Jharkhand%2C%20India!5e0!3m2!1sen!2sus!4v1714457220000!5m2!1sen!2sus" 
-                className="absolute inset-0 w-full h-full border-0" 
-                allowFullScreen={true} 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Maharani Jewellers Dhanbad Location"
-              ></iframe>
-            </div>
-            <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-4 px-4">
-              <div className="text-center md:text-left">
-                <p className="font-medium text-brand-black">{STORE_DETAILS.address}</p>
-                <p className="text-gray-500 mt-1">Open today: 10:00 AM - 8:00 PM</p>
-              </div>
-              <div className="flex gap-4 shrink-0">
-                <a 
-                  href={`tel:${STORE_DETAILS.phone}`}
-                  className="px-6 py-3 bg-brand-black text-white font-medium rounded-lg hover:bg-gray-800 transition-colors"
-                >
-                  Call Store
-                </a>
-                <a 
-                  href={`https://www.google.com/maps/dir/?api=1&destination=${GEO.lat},${GEO.lng}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-6 py-3 bg-brand-gold text-brand-black font-medium rounded-lg hover:bg-brand-soft-gold transition-colors"
-                >
-                  Get Directions
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <MapSection />
     </div>
   );
 }

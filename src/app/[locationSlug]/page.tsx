@@ -5,6 +5,7 @@ import { STORE_DETAILS, GEO } from '@/lib/constants';
 import Link from 'next/link';
 import ProductCard from '@/components/ui/ProductCard';
 import { getProducts } from '@/lib/dataFetcher';
+import MapSection from '@/components/ui/MapSection';
 
 export async function generateStaticParams() {
   return SEO_PAGES.map((page) => ({
@@ -85,23 +86,7 @@ export default async function LocationSEOPage({ params }: { params: Promise<{ lo
         </div>
       </section>
 
-      {/* Map Section embedded again for SEO context */}
-      <section className="bg-brand-light p-8 rounded-3xl">
-        <div className="text-center mb-8">
-          <h2 className="font-playfair text-3xl text-brand-black mb-2">Visit Our Dhanbad Store</h2>
-          <p className="text-gray-600">Find the best {pageData.keyword} at {STORE_DETAILS.name}</p>
-        </div>
-        <div className="aspect-video w-full rounded-2xl overflow-hidden relative bg-gray-200">
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14603.250550085444!2d86.41725515!3d23.7957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f6a70a842eb351%3A0x6b74e7fc7868832a!2sDhanbad%2C%20Jharkhand%2C%20India!5e0!3m2!1sen!2sus!4v1714457220000!5m2!1sen!2sus" 
-            className="absolute inset-0 w-full h-full border-0" 
-            allowFullScreen={true} 
-            loading="lazy" 
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Maharani Jewellers Dhanbad Location"
-          ></iframe>
-        </div>
-      </section>
+      <MapSection />
     </div>
   );
 }
