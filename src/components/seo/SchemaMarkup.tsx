@@ -1,0 +1,59 @@
+import { STORE_DETAILS, GEO, SITE_URL } from "@/lib/constants";
+import Script from "next/script";
+
+export function GlobalSchema() {
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "JewelryStore",
+    name: STORE_DETAILS.name,
+    image: `${SITE_URL}/og-image.jpg`,
+    "@id": SITE_URL,
+    url: SITE_URL,
+    telephone: STORE_DETAILS.phone,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: STORE_DETAILS.address,
+      addressLocality: "Dhanbad",
+      addressRegion: "JH",
+      postalCode: "828103",
+      addressCountry: "IN",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: GEO.lat,
+      longitude: GEO.lng,
+    },
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
+      opens: "10:00",
+      closes: "20:00",
+    },
+  };
+
+  const aggregateRatingSchema = {
+    "@context": "https://schema.org",
+    "@type": "JewelryStore",
+    "@id": SITE_URL,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      reviewCount: "120",
+    },
+  };
+
+  return (
+    <>
+      <Script id="local-business-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
+      <Script id="aggregate-rating-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aggregateRatingSchema) }} />
+    </>
+  );
+}

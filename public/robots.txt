@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://maharanijewellers.com
+
+# Sitemaps
+Sitemap: https://maharanijewellers.com/sitemap.xml
