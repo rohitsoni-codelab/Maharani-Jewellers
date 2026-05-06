@@ -6,6 +6,8 @@ import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import MobileStickyBar from "@/components/ui/MobileStickyBar";
 import { GlobalSchema } from "@/components/seo/SchemaMarkup";
+import SmoothScroll from "@/components/layout/SmoothScroll";
+import PageTransition from "@/components/layout/PageTransition";
 
 const cormorant = Cormorant_Garamond({
   weight: ['400', '500', '600', '700'],
@@ -25,8 +27,8 @@ const cinzel = Cinzel({
 });
 
 export const metadata = constructMetadata({
-  title: "Premium Jewellery Shop in Katrash, Dhanbad | Maharani Jewellers",
-  description: "Maharani Jewellers is the best gold and diamond jewellery shop near Bhelatand Mor, Katrash, Dhanbad. Explore our exclusive collections.",
+  title: "Premium Jewellery Shop in Katrash | Maharani Jewellers",
+  description: "Maharani Jewellers is the best gold and diamond jewellery shop near Bhelatand Mor, Katrash. Explore our exclusive collections.",
   path: "",
 });
 
@@ -40,9 +42,12 @@ export default function RootLayout({
       <head>
         <GlobalSchema />
       </head>
-      <body className="min-h-full flex flex-col pb-16 md:pb-0">
+      <body className="min-h-full flex flex-col pb-16 md:pb-0 font-body">
+        <SmoothScroll />
         <Header />
-        <main className="flex-grow">{children}</main>
+        <PageTransition>
+          <main className="flex-grow">{children}</main>
+        </PageTransition>
         <Footer />
         <WhatsAppButton />
         <MobileStickyBar />

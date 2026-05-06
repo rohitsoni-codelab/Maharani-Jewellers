@@ -19,7 +19,7 @@ const ProductSchema: Schema = new Schema({
   description: { type: String, required: true },
   images: { type: [String], required: true },
   keywords: { type: [String], required: true },
-  location: { type: String, default: "Katrash, Dhanbad" },
+  location: { type: String, default: "Katrash" },
   price: { type: String, default: "Price on Enquiry" },
   weight: { type: String }
 }, { timestamps: true });

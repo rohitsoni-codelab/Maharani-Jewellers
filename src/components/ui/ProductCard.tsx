@@ -1,5 +1,9 @@
-import Image from "next/image";
+'use client';
+
 import Link from "next/link";
+import { motion } from "framer-motion";
+import PremiumImage from "./PremiumImage";
+import { goldGlow } from "@/lib/animations";
 
 interface ProductCardProps {
   name: string;
@@ -12,27 +16,45 @@ interface ProductCardProps {
 
 export default function ProductCard({ name, slug, price, image, category, priority = false }: ProductCardProps) {
   return (
-    <Link href={`/product/${slug}`} className="group block">
-      <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)] transition-all duration-500 hover:-translate-y-2 hover:scale-105">
-        <div className="relative aspect-square w-full bg-gray-100 overflow-hidden">
-          <Image
-            src={image}
-            alt={`${name} in Dhanbad`}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            priority={priority}
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-        </div>
-        <div className="p-6 text-center">
-          <p className="text-xs text-brand-gold uppercase tracking-widest mb-2">{category}</p>
-          <h3 className="font-playfair text-lg text-brand-black mb-2">{name}</h3>
-          {price && <p className="text-sm font-medium text-gray-600">{price}</p>}
-          <div className="mt-4 inline-block px-6 py-2 border border-brand-gold text-brand-black text-xs uppercase tracking-wider group-hover:bg-brand-gold group-hover:text-white transition-colors duration-300">
-            View Details
+    <motion.div
+      whileHover="hover"
+      variants={goldGlow}
+      className="group relative"
+    >
+      <Link href={`/product/${slug}`} className="block">
+        <PremiumImage 
+          src={image}
+          alt={`${name} in Katrash`}
+          priority={priority}
+          containerClassName="rounded-sm"
+          className="transition-transform duration-1000 group-hover:scale-105"
+        />
+        
+        <div className="mt-6 text-center space-y-3">
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-[9px] uppercase tracking-[0.3em] text-brand-gold font-bold">
+              {category}
+            </span>
+            <h3 className="font-playfair text-lg text-brand-black tracking-tight group-hover:text-brand-gold transition-colors duration-500">
+              {name}
+            </h3>
+          </div>
+          
+          <div className="h-[1px] w-8 bg-gray-100 mx-auto group-hover:w-12 group-hover:bg-brand-gold transition-all duration-500" />
+          
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-xs text-gray-500 font-light italic">
+              {price || "Price on Enquiry"}
+            </p>
+            
+            <div className="mt-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+              <span className="text-[10px] uppercase tracking-[0.2em] text-brand-black border-b border-brand-black pb-1">
+                Explore Piece
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </motion.div>
   );
 }

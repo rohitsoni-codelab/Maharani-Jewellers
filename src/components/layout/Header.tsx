@@ -1,37 +1,82 @@
+'use client';
+
 import Link from "next/link";
-import Image from "next/image";
 import { STORE_DETAILS } from "@/lib/constants";
+import { motion, useScroll } from "framer-motion";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Header() {
+  const pathname = usePathname();
+  const { scrollY } = useScroll();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    return scrollY.onChange((latest) => {
+      setIsScrolled(latest > 50);
+    });
+  }, [scrollY]);
+
+  const navLinks = [
+    { name: "Gold", href: "/collections/gold" },
+    { name: "Diamond", href: "/collections/diamond" },
+    { name: "Bridal", href: "/collections/bridal" },
+    { name: "Our Store", href: "/jewellery-shop-katrash" },
+  ];
+
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-        <Link href="/" className="flex flex-col items-start group py-2">
-          <span className="font-cinzel text-2xl md:text-3xl font-bold tracking-[0.15em] text-gradient group-hover:brightness-125 transition-all duration-300">
+    <motion.header 
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className={`sticky top-0 z-50 w-full transition-all duration-500 ${
+        isScrolled ? "bg-white/95 backdrop-blur-md py-3 shadow-sm border-b border-gray-100" : "bg-white py-5"
+      }`}
+    >
+      <div className="container mx-auto px-4 flex items-center justify-between">
+        <Link href="/" className="flex flex-col items-start group py-1">
+          <span className="font-cinzel text-xl md:text-2xl font-bold tracking-[0.2em] text-gradient group-hover:brightness-125 transition-all duration-500">
             MAHARANI
           </span>
           <div className="flex items-center gap-2 mt-0.5">
-            <span className="text-[9px] md:text-[10px] tracking-[0.25em] text-brand-black uppercase font-medium">
+            <span className="text-[8px] md:text-[9px] tracking-[0.3em] text-brand-black uppercase font-bold">
               Jewellers
-            </span>
-            <span className="text-gray-300 text-[10px] hidden sm:inline">•</span>
-            <span className="text-[8px] md:text-[9px] text-gray-500 tracking-wider hidden sm:inline">
-              Since 2015 • Katrash, Dhanbad
             </span>
           </div>
         </Link>
-        <nav className="hidden md:flex items-center gap-8 font-medium text-sm">
-          <Link href="/collections/gold" className="hover:text-brand-gold transition-colors">Gold</Link>
-          <Link href="/collections/diamond" className="hover:text-brand-gold transition-colors">Diamond</Link>
-          <Link href="/collections/bridal" className="hover:text-brand-gold transition-colors">Bridal</Link>
-          <Link href="/jewellery-shop-dhanbad" className="hover:text-brand-gold transition-colors">Our Store</Link>
+
+        <nav className="hidden md:flex items-center gap-10">
+          {navLinks.map((link) => (
+            <Link 
+              key={link.href} 
+              href={link.href} 
+              className={`relative text-[10px] uppercase tracking-[0.3em] font-bold transition-colors duration-300 ${
+                pathname === link.href ? "text-brand-gold" : "text-gray-400 hover:text-brand-black"
+              }`}
+            >
+              {link.name}
+              {pathname === link.href && (
+                <motion.div 
+                  layoutId="nav-underline"
+                  className="absolute -bottom-1 left-0 right-0 h-[1px] bg-brand-gold"
+                />
+              )}
+            </Link>
+          ))}
         </nav>
+
         <div className="hidden md:flex items-center">
-          <a href={`tel:${STORE_DETAILS.phone}`} className="px-6 py-2 bg-brand-black text-white text-sm hover:bg-brand-gold transition-colors duration-300">
-            Call Us
+          <a 
+            href={`tel:${STORE_DETAILS.phone}`} 
+            className="px-8 py-2.5 bg-brand-black text-brand-gold text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-gray-900 transition-all duration-300 rounded-sm"
+          >
+            Connect
           </a>
         </div>
       </div>
-    </header>
+      
+      {/* Luxury Gold Divider Line */}
+      <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent opacity-50" />
+    </motion.header>
   );
 }

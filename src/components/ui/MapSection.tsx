@@ -1,4 +1,4 @@
-import { STORE_DETAILS } from '@/lib/constants';
+import { STORE_DETAILS, SITE_URL, GEO } from '@/lib/constants';
 
 export default function MapSection() {
   const whatsappNumber = STORE_DETAILS.whatsapp || STORE_DETAILS.phone;
@@ -8,23 +8,23 @@ export default function MapSection() {
   const mapSchema = {
     "@context": "https://schema.org",
     "@type": "JewelryStore",
-    "name": "Maharani Jewellers",
-    "image": "https://www.maharanijewellers.com/images/logo.png",
-    "@id": "https://www.maharanijewellers.com",
-    "url": "https://www.maharanijewellers.com",
-    "telephone": "+91 7050185812",
+    "name": STORE_DETAILS.name,
+    "image": `${SITE_URL}/images/logo.png`,
+    "@id": SITE_URL,
+    "url": SITE_URL,
+    "telephone": STORE_DETAILS.phone,
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Bhelatand Mor, Opposite Kali Mandir, Katrash",
-      "addressLocality": "Dhanbad",
+      "addressLocality": "Katrash",
       "addressRegion": "Jharkhand",
       "postalCode": "828103",
       "addressCountry": "IN"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 23.7957,
-      "longitude": 86.4172
+      "latitude": GEO.lat,
+      "longitude": GEO.lng
     }
   };
 
@@ -36,14 +36,14 @@ export default function MapSection() {
       />
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="font-playfair text-3xl md:text-4xl text-brand-black mb-4">Visit Our Jewellery Shop in Katrash, Dhanbad</h2>
+          <h2 className="font-playfair text-3xl md:text-4xl text-brand-black mb-4">Visit Our Jewellery Shop in Katrash</h2>
           <p className="text-gray-600">Located at Bhelatand Mor. Experience our premium hallmark gold and diamond collection in person.</p>
         </div>
         <div className="max-w-5xl mx-auto bg-brand-light p-4 md:p-6 rounded-3xl shadow-sm border border-gray-100">
           {/* Map Container */}
           <div className="aspect-video sm:aspect-[21/9] w-full rounded-2xl overflow-hidden relative bg-gray-200 border border-gray-200">
             <iframe 
-              src="https://maps.google.com/maps?q=Maharani%20Jewellers%2C%20Bhelatand%20Mor%2C%20Katrash%2C%20Dhanbad&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+              src={`https://maps.google.com/maps?q=${GEO.lat},${GEO.lng}&t=&z=16&ie=UTF8&iwloc=&output=embed`} 
               className="absolute inset-0 w-full h-full border-0" 
               allowFullScreen={true} 
               loading="lazy" 
@@ -57,7 +57,7 @@ export default function MapSection() {
             <div className="text-center lg:text-left">
               <h3 className="font-playfair text-xl font-bold text-brand-black mb-2">Maharani Jewellers</h3>
               <p className="text-gray-700 text-sm md:text-base">Bhelatand Mor, Opposite Kali Mandir</p>
-              <p className="text-gray-700 text-sm md:text-base">Katrash, Dhanbad, Jharkhand – 828103</p>
+              <p className="text-gray-700 text-sm md:text-base">Katrash, Jharkhand – 828103</p>
               <p className="text-gray-700 font-medium mt-2">Phone: +91 7050185812</p>
             </div>
             

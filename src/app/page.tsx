@@ -7,6 +7,8 @@ import Image from 'next/image';
 import HeroSlider from '@/components/ui/HeroSlider';
 import { getProducts } from '@/lib/dataFetcher';
 import MapSection from '@/components/ui/MapSection';
+import ProductShowcase from '@/components/ui/ProductShowcase';
+import PremiumImage from '@/components/ui/PremiumImage';
 
 export default async function Home() {
   const products = await getProducts();
@@ -19,13 +21,17 @@ export default async function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="font-playfair text-3xl md:text-4xl text-brand-black mb-4">Discover Our Collections</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">Explore the finest jewellery in Dhanbad, crafted with precision and passion since {STORE_DETAILS.since}.</p>
+            <p className="text-gray-600 max-w-2xl mx-auto">Explore the finest jewellery in Katrash, crafted with precision and passion since {STORE_DETAILS.since}.</p>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
             {CATEGORIES.map((cat) => (
-              <Link href={cat.link} key={cat.slug} className="group block relative aspect-square overflow-hidden rounded-2xl shadow-sm hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)] transition-all duration-500 hover:-translate-y-2">
-                <Image src={cat.image} alt={cat.name} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition-transform duration-700 group-hover:scale-110" />
+              <Link href={cat.link} key={cat.slug} className="group block relative overflow-hidden rounded-2xl shadow-sm hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)] transition-all duration-500 hover:-translate-y-2">
+                <PremiumImage 
+                  src={cat.image} 
+                  alt={cat.name} 
+                  className="transition-transform duration-700 group-hover:scale-110" 
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
                   <h3 className="font-playfair text-xl text-white">{cat.name}</h3>
                 </div>
@@ -36,29 +42,7 @@ export default async function Home() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="font-playfair text-3xl md:text-4xl text-brand-black mb-4 text-gradient">Trending in Dhanbad</h2>
-            <p className="text-gray-600">Our most loved pieces by the people of Dhanbad.</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {products.slice(0, 4).map((product: any, index: number) => (
-              <ProductCard 
-                key={product.slug}
-                {...product}
-                image={product.images[0]}
-                priority={index < 2}
-              />
-            ))}
-          </div>
-          <div className="text-center mt-12">
-            <Link href="/collections/gold" className="inline-block px-8 py-3 border-2 border-brand-black text-brand-black font-medium hover:bg-brand-black hover:text-white transition-colors duration-300">
-              View All Collections
-            </Link>
-          </div>
-        </div>
-      </section>
+      <ProductShowcase initialProducts={products} />
 
       <TrustBadges />
 

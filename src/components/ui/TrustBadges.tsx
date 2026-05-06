@@ -13,8 +13,8 @@ export default function TrustBadges() {
           </div>
           <div className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow">
             <Users className="text-brand-gold w-12 h-12 mb-4" />
-            <h3 className="font-playfair text-xl mb-2">Trusted in Dhanbad</h3>
-            <p className="text-gray-500 text-sm">Trusted by hundreds of happy customers in Dhanbad.</p>
+            <h3 className="font-playfair text-xl mb-2">Trusted in Katrash</h3>
+            <p className="text-gray-500 text-sm">Trusted by hundreds of happy customers in Katrash.</p>
           </div>
           <div className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow">
             <ShieldCheck className="text-brand-gold w-12 h-12 mb-4" />

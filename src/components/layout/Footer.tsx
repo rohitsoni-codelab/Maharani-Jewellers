@@ -17,20 +17,20 @@ export default function Footer() {
               </span>
               <span className="text-gray-600 text-[10px]">•</span>
               <span className="text-[9px] text-brand-gold tracking-wider">
-                Since 2015 • Katrash, Dhanbad
+                Since 2015 • Katrash
               </span>
             </div>
           </div>
           <p className="text-sm text-gray-400 mb-4 max-w-sm">
-            Dhanbad's most trusted jewellery destination since {STORE_DETAILS.since}. Explore our exquisite collection of hallmark certified gold and diamond jewellery.
+            Katrash's most trusted jewellery destination since {STORE_DETAILS.since}. Explore our exquisite collection of hallmark certified gold and diamond jewellery.
           </p>
         </div>
         <div>
           <h4 className="font-playfair text-lg mb-4">Quick Links</h4>
           <ul className="space-y-2 text-sm text-gray-400">
-            <li><Link href="/gold-jewellery-dhanbad" className="hover:text-brand-gold transition-colors">Gold Jewellery</Link></li>
-            <li><Link href="/diamond-jewellery-dhanbad" className="hover:text-brand-gold transition-colors">Diamond Jewellery</Link></li>
-            <li><Link href="/bridal-jewellery-dhanbad" className="hover:text-brand-gold transition-colors">Bridal Sets</Link></li>
+            <li><Link href="/gold-jewellery-katrash" className="hover:text-brand-gold transition-colors">Gold Jewellery</Link></li>
+            <li><Link href="/diamond-jewellery-katrash" className="hover:text-brand-gold transition-colors">Diamond Jewellery</Link></li>
+            <li><Link href="/bridal-jewellery-katrash" className="hover:text-brand-gold transition-colors">Bridal Sets</Link></li>
           </ul>
         </div>
         <div>

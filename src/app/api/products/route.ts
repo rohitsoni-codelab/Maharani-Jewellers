@@ -4,6 +4,7 @@ import { Product } from '@/models/Product';
 import { PRODUCTS } from '@/data/mockData';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
+import { revalidatePath } from 'next/cache';
 
 export async function GET() {
   try {
@@ -37,10 +38,18 @@ export async function POST(request: Request) {
     }
     
     const body = await request.json();
+    
+    // Auto-generate slug if not provided or to ensure uniqueness
+    const baseSlug = (body.slug || body.name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const existingProduct = await Product.findOne({ slug: baseSlug });
+    if (existingProduct) {
+      body.slug = `${baseSlug}-${Date.now()}`;
+    } else {
+      body.slug = baseSlug;
+    }
+
     const product = await Product.create(body);
     
-    // Revalidate the entire layout to ensure dynamic data refreshes everywhere
-    const { revalidatePath } = await import('next/cache');
     revalidatePath('/', 'layout');
 
     return NextResponse.json({ success: true, data: product }, { status: 201 });

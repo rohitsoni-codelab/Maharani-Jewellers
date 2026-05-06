@@ -32,7 +32,7 @@ export function constructMetadata({
           url: `${SITE_URL}/og-image.jpg`,
           width: 1200,
           height: 630,
-          alt: "Maharani Jewellers in Dhanbad",
+          alt: "Maharani Jewellers in Katrash",
         },
       ],
       locale: "en_IN",

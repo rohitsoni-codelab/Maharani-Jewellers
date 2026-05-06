@@ -13,8 +13,8 @@ export function GlobalSchema() {
     address: {
       "@type": "PostalAddress",
       streetAddress: STORE_DETAILS.address,
-      addressLocality: "Dhanbad",
-      addressRegion: "JH",
+      addressLocality: "Katrash",
+      addressRegion: "Jharkhand",
       postalCode: "828103",
       addressCountry: "IN",
     },

@@ -1,6 +1,6 @@
 import { getProductBySlug, getProducts } from '@/lib/dataFetcher';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
+import PremiumImage from '@/components/ui/PremiumImage';
 import { STORE_DETAILS, GEO, SITE_URL } from '@/lib/constants';
 import Script from 'next/script';
 import { constructMetadata } from '@/lib/metadata';
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!product) return {};
 
   return constructMetadata({
-    title: `${product.name} in Dhanbad | ${STORE_DETAILS.name}`,
+    title: `${product.name} in Katrash | ${STORE_DETAILS.name}`,
     description: product.description,
     path: `/product/${slug}`,
   });
@@ -60,7 +60,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     }
   };
 
-  const whatsappMessage = `Hi, I'm interested in the ${product.name} from your Dhanbad store.`;
+  const whatsappMessage = `Hi, I'm interested in the ${product.name} from your Katrash store.`;
   const whatsappUrl = `https://wa.me/${STORE_DETAILS.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
@@ -77,19 +77,17 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
           <div className="space-y-4">
             <div className="relative aspect-square w-full bg-gray-100 rounded-2xl overflow-hidden shadow-sm">
-              <Image 
+              <PremiumImage 
                 src={product.images[0]} 
-                alt={`${product.name} in Dhanbad`} 
-                fill 
+                alt={`${product.name} in Katrash`} 
                 priority 
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover hover:scale-110 transition-transform duration-700" 
+                className="hover:scale-110 transition-transform duration-700" 
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               {product.images.slice(1).map((img: string, idx: number) => (
                 <div key={idx} className="relative aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-sm">
-                  <Image src={img} alt={`${product.name} details ${idx + 1}`} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover" />
+                  <PremiumImage src={img} alt={`${product.name} details ${idx + 1}`} />
                 </div>
               ))}
             </div>
@@ -103,7 +101,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <ul className="mt-4 space-y-2">
                 <li><span className="font-medium">Weight:</span> {product.weight}</li>
                 <li><span className="font-medium">Purity:</span> Hallmark Certified</li>
-                <li><span className="font-medium">Location:</span> Available at Dhanbad Store</li>
+                <li><span className="font-medium">Location:</span> Available at Katrash Store</li>
               </ul>
             </div>
             
@@ -121,7 +119,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <span className="text-xl">📍</span>
               </div>
               <div>
-                <h4 className="font-medium text-brand-black mb-1">Available at our Dhanbad Store</h4>
+                <h4 className="font-medium text-brand-black mb-1">Available at our Katrash Store</h4>
                 <p className="text-sm text-gray-500">{STORE_DETAILS.address}</p>
               </div>
             </div>
@@ -130,7 +128,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
         {relatedProducts.length > 0 && (
           <section className="pt-12 border-t border-gray-100">
-            <h2 className="font-playfair text-3xl text-brand-black mb-8 text-center">Similar Jewellery in Dhanbad</h2>
+            <h2 className="font-playfair text-3xl text-brand-black mb-8 text-center">Similar Jewellery in Katrash</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {relatedProducts.map((p: any) => (
                 <ProductCard key={p.slug} {...p} image={p.images[0]} />
