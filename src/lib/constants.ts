@@ -3,6 +3,8 @@ export const STORE_DETAILS = {
   address: "Bhelatand Mor, Opposite Kali Mandir, Katrash, Jharkhand, 828103",
   phone: "+91 7050185812",
   whatsapp: "+917050185812",
+  email: "Maharanijewellersbhelatand@gmail.com",
+  instagram: "Maharani_jewellers_2015",
   since: 2015,
 };
 

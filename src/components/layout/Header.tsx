@@ -29,28 +29,31 @@ export default function Header() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className={`sticky top-0 z-50 w-full transition-all duration-500 ${
-        isScrolled ? "bg-white/95 backdrop-blur-md py-3 shadow-sm border-b border-gray-100" : "bg-white py-5"
+      className={`sticky top-0 z-50 w-full bg-white transition-all duration-500 ${
+        isScrolled ? "py-2 md:py-3 shadow-md" : "py-4 md:py-6"
       }`}
     >
-      <div className="container mx-auto px-4 flex items-center justify-between">
-        <Link href="/" className="flex flex-col items-start group py-1">
-          <span className="font-cinzel text-xl md:text-2xl font-bold tracking-[0.2em] text-gradient group-hover:brightness-125 transition-all duration-500">
+      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
+        <Link href="/" className="flex flex-col items-center md:items-start group transition-transform duration-300 hover:scale-[1.02]">
+          <span className="font-cinzel text-3xl md:text-3xl font-bold tracking-[0.25em] text-gradient drop-shadow-sm leading-none">
             MAHARANI
           </span>
-          <div className="flex items-center gap-2 mt-0.5">
-            <span className="text-[8px] md:text-[9px] tracking-[0.3em] text-brand-black uppercase font-bold">
+          <div className="flex flex-col items-center md:items-start mt-1">
+            <span className="text-[10px] md:text-[11px] tracking-[0.4em] text-brand-black uppercase font-semibold ml-1">
               Jewellers
+            </span>
+            <span className="text-[7px] md:text-[8px] text-gray-400 tracking-[0.2em] uppercase font-medium mt-1 border-t border-brand-gold/20 pt-1">
+              Since 2015 • Katrash
             </span>
           </div>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-10">
+        <nav className="flex items-center gap-6 md:gap-10 font-medium text-[10px] uppercase tracking-[0.2em] text-brand-black/80">
           {navLinks.map((link) => (
             <Link 
               key={link.href} 
               href={link.href} 
-              className={`relative text-[10px] uppercase tracking-[0.3em] font-bold transition-colors duration-300 ${
+              className={`relative transition-colors duration-300 ${
                 pathname === link.href ? "text-brand-gold" : "text-gray-400 hover:text-brand-black"
               }`}
             >
@@ -68,7 +71,7 @@ export default function Header() {
         <div className="hidden md:flex items-center">
           <a 
             href={`tel:${STORE_DETAILS.phone}`} 
-            className="px-8 py-2.5 bg-brand-black text-brand-gold text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-gray-900 transition-all duration-300 rounded-sm"
+            className="px-8 py-2.5 bg-brand-black text-brand-gold text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-gray-900 transition-all duration-300 rounded-sm shadow-lg shadow-brand-gold/5"
           >
             Connect
           </a>
@@ -76,7 +79,7 @@ export default function Header() {
       </div>
       
       {/* Luxury Gold Divider Line */}
-      <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent opacity-50" />
+      <div className="h-[0.5px] w-full bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent opacity-60 mt-3 md:mt-0" />
     </motion.header>
   );
 }

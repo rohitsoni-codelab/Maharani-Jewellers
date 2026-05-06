@@ -38,6 +38,7 @@ export default function Footer() {
           <address className="not-italic text-sm text-gray-400 space-y-2">
             <p>{STORE_DETAILS.address}</p>
             <p>Phone: <a href={`tel:${STORE_DETAILS.phone}`} className="hover:text-brand-gold">{STORE_DETAILS.phone}</a></p>
+            <p>Instagram: <a href={`https://instagram.com/${STORE_DETAILS.instagram}`} target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold">@{STORE_DETAILS.instagram}</a></p>
             <p>Hours: Mon - Sun | 10:00 AM - 8:00 PM</p>
           </address>
         </div>

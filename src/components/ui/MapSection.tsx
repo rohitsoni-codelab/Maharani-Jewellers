@@ -13,6 +13,7 @@ export default function MapSection() {
     "@id": SITE_URL,
     "url": SITE_URL,
     "telephone": STORE_DETAILS.phone,
+    "email": STORE_DETAILS.email,
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Bhelatand Mor, Opposite Kali Mandir, Katrash",
@@ -58,7 +59,8 @@ export default function MapSection() {
               <h3 className="font-playfair text-xl font-bold text-brand-black mb-2">Maharani Jewellers</h3>
               <p className="text-gray-700 text-sm md:text-base">Bhelatand Mor, Opposite Kali Mandir</p>
               <p className="text-gray-700 text-sm md:text-base">Katrash, Jharkhand – 828103</p>
-              <p className="text-gray-700 font-medium mt-2">Phone: +91 7050185812</p>
+              <p className="text-gray-700 font-medium mt-2">Phone: {STORE_DETAILS.phone}</p>
+              <p className="text-gray-700 text-sm italic">{STORE_DETAILS.email}</p>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">

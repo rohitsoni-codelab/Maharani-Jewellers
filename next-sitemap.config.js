@@ -9,7 +9,7 @@ module.exports = {
 
     if (path === '/') {
       priority = 1.0;
-    } else if (path.startsWith('/collections') || path.includes('-dhanbad')) {
+    } else if (path.startsWith('/collections') || path.includes('-katrash')) {
       priority = 0.8;
     } else if (path.startsWith('/product')) {
       priority = 0.7;

@@ -49,7 +49,7 @@ export default function HeroSlider() {
               <motion.div 
                 initial={{ scale: 1.1 }}
                 animate={activeIndex === index ? { scale: 1 } : { scale: 1.1 }}
-                transition={{ duration: 6, ease: "linear" }}
+                transition={{ duration: 6, ease: "linear" } as any}
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                 style={{ 
                   backgroundImage: `url(${slide.image})`,
@@ -66,7 +66,7 @@ export default function HeroSlider() {
                       key={activeIndex}
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                      transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 } as any}
                       className="space-y-6"
                     >
                       <p className="text-brand-gold text-xs md:text-sm tracking-[0.4em] uppercase font-bold">
@@ -98,7 +98,7 @@ export default function HeroSlider() {
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
+        transition={{ delay: 2, duration: 1 } as any}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-4"
       >
         <span className="text-[9px] uppercase tracking-[0.3em] text-white/40 font-medium">Scroll</span>

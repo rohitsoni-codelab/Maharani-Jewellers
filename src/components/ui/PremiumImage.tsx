@@ -22,7 +22,7 @@ export default function PremiumImage({
 
   // Cloudinary Optimization Helper
   const optimizedSrc = typeof src === 'string' && src.includes('cloudinary.com')
-    ? src.replace('/upload/', '/upload/f_auto,q_auto,w_auto/')
+    ? src.replace('/upload/', '/upload/f_auto,q_auto/')
     : src;
 
   return (
