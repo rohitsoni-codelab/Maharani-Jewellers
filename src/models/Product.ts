@@ -10,6 +10,16 @@ export interface IProduct extends Document {
   location: string;
   price?: string;
   weight?: string;
+  status: 'draft' | 'published' | 'archived';
+  isFeatured: boolean;
+  sortOrder: number;
+  collectionId?: mongoose.Types.ObjectId;
+  tags: string[];
+  isDeleted: boolean;
+  seo: {
+    title: string;
+    description: string;
+  };
 }
 
 const ProductSchema: Schema = new Schema({
@@ -21,7 +31,17 @@ const ProductSchema: Schema = new Schema({
   keywords: { type: [String], required: true },
   location: { type: String, default: "Katrash" },
   price: { type: String, default: "Price on Enquiry" },
-  weight: { type: String }
+  weight: { type: String },
+  status: { type: String, enum: ['draft', 'published', 'archived'], default: 'draft' },
+  isFeatured: { type: Boolean, default: false },
+  sortOrder: { type: Number, default: 0 },
+  collectionId: { type: Schema.Types.ObjectId, ref: 'Collection' },
+  tags: { type: [String], default: [] },
+  isDeleted: { type: Boolean, default: false },
+  seo: {
+    title: { type: String },
+    description: { type: String }
+  }
 }, { timestamps: true });
 
 export const Product = mongoose.models.Product || mongoose.model<IProduct>('Product', ProductSchema);

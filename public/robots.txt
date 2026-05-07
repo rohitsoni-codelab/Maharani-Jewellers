@@ -1,6 +1,9 @@
-# *
+# Crawlers
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /login
 
 # Host
 Host: https://maharanijewellers.com

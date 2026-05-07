@@ -23,7 +23,7 @@ export default function ProductCard({ name, slug, price, image, category, priori
     >
       <Link href={`/product/${slug}`} className="block">
         <PremiumImage 
-          src={image}
+          src={image || 'https://images.unsplash.com/photo-1515562141207-7a88b7ce3387?q=80&w=800'}
           alt={`${name} in Katrash`}
           priority={priority}
           containerClassName="rounded-sm"

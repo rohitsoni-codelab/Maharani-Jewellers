@@ -1,16 +1,18 @@
-import { PRODUCTS, CATEGORIES } from '@/data/mockData';
+import { CATEGORIES } from '@/data/mockData';
 import ProductCard from '@/components/ui/ProductCard';
 import { constructMetadata } from '@/lib/metadata';
 import Link from 'next/link';
 import { STORE_DETAILS } from '@/lib/constants';
+import { getProducts } from '@/lib/dataFetcher';
 
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
   const { category } = await params;
   const formattedCategory = category.replace('-', ' ');
   return constructMetadata({
-    title: `${formattedCategory.toUpperCase()} in Katrash | ${STORE_DETAILS.name}`,
-    description: `Explore the finest ${formattedCategory} collection at ${STORE_DETAILS.name} in Katrash.`,
+    title: `${formattedCategory.charAt(0).toUpperCase() + formattedCategory.slice(1)} Jewellery in Katrash | ${STORE_DETAILS.name}`,
+    description: `Explore the finest ${formattedCategory} jewellery collection at ${STORE_DETAILS.name} in Katrash. Hallmark certified, available at Bhelatand Mor. Since ${STORE_DETAILS.since}.`,
     path: `/collections/${category}`,
+    keywords: [`${formattedCategory} jewellery Katrash`, `best ${formattedCategory} Jharkhand`],
   });
 }
 
@@ -18,14 +20,20 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
   const { category } = await params;
   const formattedCategory = category.replace('-', ' ').toLowerCase();
   
-  const products = PRODUCTS.filter(p => p.category.toLowerCase().includes(formattedCategory));
+  // Fetch real products from DB, not just mock data
+  const allProducts = await getProducts();
+  const products = allProducts.filter((p: any) => 
+    p.category?.toLowerCase().includes(formattedCategory) ||
+    p.keywords?.some((k: string) => k.toLowerCase().includes(formattedCategory))
+  );
+
   const categoryTitle = CATEGORIES.find(c => c.slug === category)?.name || formattedCategory.replace(/\b\w/g, l => l.toUpperCase());
 
   return (
     <div className="flex flex-col min-h-screen">
       <div className="container mx-auto px-4 py-8 md:py-12">
         {/* Breadcrumb */}
-        <nav className="flex justify-center mb-10 md:mb-16">
+        <nav className="flex justify-center mb-10 md:mb-16" aria-label="Breadcrumb">
           <div className="text-[10px] uppercase tracking-[0.3em] text-gray-400 flex items-center gap-3">
             <Link href="/" className="hover:text-brand-gold transition-colors">Home</Link>
             <span className="w-1 h-1 rounded-full bg-gray-300"></span>
@@ -71,8 +79,8 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
 
         {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12 mb-24">
-          {products.map((p, index) => (
-            <ProductCard key={p.slug} {...p} image={p.images[0]} priority={index < 4} />
+          {products.map((p: any, index: number) => (
+            <ProductCard key={p.slug || index} {...p} image={p.images?.[0]} priority={index < 4} />
           ))}
           {products.length === 0 && (
             <div className="col-span-full text-center py-20 text-gray-400 italic">
@@ -81,7 +89,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
           )}
         </div>
 
-        {/* Bottom SEO Section - Clean & Minimal */}
+        {/* Bottom SEO Section */}
         <div className="max-w-3xl mx-auto border-t border-gray-100 pt-16 mb-16">
           <h2 className="font-playfair text-2xl text-brand-black mb-8 text-center uppercase tracking-widest">About The Collection</h2>
           <div className="prose prose-sm md:prose-base text-gray-500 mx-auto text-center leading-loose">

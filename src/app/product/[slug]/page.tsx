@@ -40,7 +40,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     "@context": "https://schema.org/",
     "@type": "Product",
     "name": product.name,
-    "image": product.images.map((img: string) => `${SITE_URL}${img}`),
+    "image": (product.images || []).map((img: string) => img.startsWith('http') ? img : `${SITE_URL}${img}`),
     "description": product.description,
     "brand": {
       "@type": "Brand",
@@ -70,7 +70,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <div className="container mx-auto px-4 py-12">
         <div className="text-sm text-gray-500 mb-8 flex items-center gap-2">
           <a href="/" className="hover:text-brand-gold">Home</a> &gt; 
-          <a href={`/collections/${product.category.toLowerCase().replace(' ', '-')}`} className="hover:text-brand-gold">{product.category}</a> &gt; 
+          <a href={`/collections/${(product.category || 'other').toLowerCase().replace(' ', '-')}`} className="hover:text-brand-gold">{product.category || 'Jewellery'}</a> &gt; 
           <span className="text-brand-black">{product.name}</span>
         </div>
 
@@ -78,14 +78,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div className="space-y-4">
             <div className="relative aspect-square w-full bg-gray-100 rounded-2xl overflow-hidden shadow-sm">
               <PremiumImage 
-                src={product.images[0]} 
+                src={product.images?.[0] || 'https://images.unsplash.com/photo-1515562141207-7a88b7ce3387?q=80&w=800'} 
                 alt={`${product.name} in Katrash`} 
                 priority 
                 className="hover:scale-110 transition-transform duration-700" 
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              {product.images.slice(1).map((img: string, idx: number) => (
+              {product.images?.slice(1).map((img: string, idx: number) => (
                 <div key={idx} className="relative aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-sm">
                   <PremiumImage src={img} alt={`${product.name} details ${idx + 1}`} />
                 </div>
@@ -95,7 +95,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
           <div className="flex flex-col justify-center">
             <h1 className="font-playfair text-3xl md:text-5xl text-brand-black mb-4">{product.name}</h1>
-            <p className="text-xl text-brand-gold mb-6">{product.price}</p>
+            <p className="text-xl text-brand-gold mb-6">{product.price || "Price on Enquiry"}</p>
             <div className="prose prose-sm text-gray-600 mb-8">
               <p>{product.description}</p>
               <ul className="mt-4 space-y-2">

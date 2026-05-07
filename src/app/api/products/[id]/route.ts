@@ -23,7 +23,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     // Ensure slug uniqueness if name changed
     if (body.name) {
       const baseSlug = body.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-      const existing = await Product.findOne({ slug: baseSlug, _id: { $ne: id } });
+      const existing = await Product.findOne({ slug: baseSlug, _id: { $ne: id }, isDeleted: { $ne: true } });
       if (existing) {
         body.slug = `${baseSlug}-${Date.now()}`;
       } else {
@@ -56,7 +56,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
       return NextResponse.json({ success: false, error: 'Database not connected' }, { status: 503 });
     }
     
-    const product = await Product.findByIdAndDelete(id);
+    const product = await Product.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
     if (!product) {
       return NextResponse.json({ success: false, error: 'Product not found' }, { status: 404 });
     }

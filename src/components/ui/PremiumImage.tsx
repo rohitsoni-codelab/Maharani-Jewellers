@@ -31,15 +31,16 @@ export default function PremiumImage({
         variants={fadeIn}
         initial="initial"
         animate={isLoaded ? "animate" : "initial"}
-        className="w-full h-full"
+        className="w-full h-full relative will-change-transform"
       >
         <Image
           src={optimizedSrc}
           alt={alt}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className={`object-cover transition-transform duration-700 ${isLoaded ? 'scale-100' : 'scale-110'} ${className}`}
           onLoad={() => setIsLoaded(true)}
+          loading={props.priority ? undefined : "lazy"}
           {...props}
         />
       </motion.div>

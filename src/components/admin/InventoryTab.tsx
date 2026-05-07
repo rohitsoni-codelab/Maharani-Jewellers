@@ -15,7 +15,7 @@ const PREDEFINED_CATEGORIES = [
   "Other"
 ];
 
-export default function AdminForm({ userEmail, initialProducts = [] }: { userEmail: string, initialProducts: any[] }) {
+export default function InventoryTab({ userEmail, initialProducts = [], isEmbedded = false }: { userEmail: string, initialProducts: any[], isEmbedded?: boolean }) {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   
@@ -31,6 +31,8 @@ export default function AdminForm({ userEmail, initialProducts = [] }: { userEma
   const [uploadStatus, setUploadStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [status, setStatus] = useState<'draft' | 'published' | 'archived'>('published');
+  const [isFeatured, setIsFeatured] = useState(false);
 
   // Sync Ref with State to avoid stale closure issues in async submit
   useEffect(() => {
@@ -138,7 +140,9 @@ export default function AdminForm({ userEmail, initialProducts = [] }: { userEma
         description,
         images: currentImages,
         keywords: keywords.split(',').map(s => s.trim()).filter(Boolean),
-        category: finalCategory
+        category: finalCategory,
+        status,
+        isFeatured
       };
 
       console.log("DEBUG: Final Payload ->", bodyData);
@@ -176,6 +180,8 @@ export default function AdminForm({ userEmail, initialProducts = [] }: { userEma
     setKeywords((product.keywords || []).join(', '));
     setImages(product.images || []);
     setEditingId(product._id);
+    setStatus(product.status || 'published');
+    setIsFeatured(product.isFeatured || false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -188,6 +194,8 @@ export default function AdminForm({ userEmail, initialProducts = [] }: { userEma
     setKeywords('');
     setImages([]);
     setEditingId(null);
+    setStatus('published');
+    setIsFeatured(false);
   };
 
   const handleDelete = async (id: string) => {
@@ -201,21 +209,23 @@ export default function AdminForm({ userEmail, initialProducts = [] }: { userEma
   };
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-7xl font-sans text-brand-black">
+    <div className={`container mx-auto px-4 py-8 max-w-7xl font-sans text-brand-black ${isEmbedded ? 'mt-0' : 'py-12'}`}>
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-center mb-12 p-8 bg-brand-black rounded-[2.5rem] text-white shadow-2xl border-b-2 border-brand-gold relative overflow-hidden">
-        <div className="z-10 text-center md:text-left">
-          <h1 className="text-4xl font-playfair mb-1 text-brand-gold">Maharani Vault</h1>
-          <p className="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold">Authority Registry System</p>
+      {!isEmbedded && (
+        <div className="flex flex-col md:flex-row justify-between items-center mb-12 p-8 bg-brand-black rounded-[2.5rem] text-white shadow-2xl border-b-2 border-brand-gold relative overflow-hidden">
+          <div className="z-10 text-center md:text-left">
+            <h1 className="text-4xl font-playfair mb-1 text-brand-gold">Maharani Vault</h1>
+            <p className="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold">Authority Registry System</p>
+          </div>
+          <div className="z-10 mt-6 md:mt-0 flex items-center gap-6">
+             <span className="text-xs opacity-60 hidden md:block">{userEmail}</span>
+             <button onClick={() => signOut()} className="px-6 py-2 border border-brand-gold/30 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-brand-gold hover:text-brand-black transition-all">
+                Sign Out
+             </button>
+          </div>
+          <div className="absolute top-0 right-0 w-32 h-32 bg-brand-gold/10 rounded-full -mr-16 -mt-16 blur-3xl" />
         </div>
-        <div className="z-10 mt-6 md:mt-0 flex items-center gap-6">
-           <span className="text-xs opacity-60 hidden md:block">{userEmail}</span>
-           <button onClick={() => signOut()} className="px-6 py-2 border border-brand-gold/30 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-brand-gold hover:text-brand-black transition-all">
-              Sign Out
-           </button>
-        </div>
-        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-gold/10 rounded-full -mr-16 -mt-16 blur-3xl" />
-      </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
         <div className="lg:col-span-5">
@@ -276,6 +286,23 @@ export default function AdminForm({ userEmail, initialProducts = [] }: { userEma
                 <p className="text-[8px] text-gray-400 mt-2 text-center uppercase tracking-widest">Images uploaded to Cloudinary: {images.length}</p>
               </div>
 
+              <div className="flex gap-4">
+                <div className="flex-1">
+                  <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 ml-1">Status</label>
+                  <select className="w-full bg-gray-50 border border-gray-100 p-3 rounded-2xl focus:border-brand-gold outline-none text-xs" value={status} onChange={e => setStatus(e.target.value as any)}>
+                    <option value="draft">Draft</option>
+                    <option value="published">Published</option>
+                    <option value="archived">Archived</option>
+                  </select>
+                </div>
+                <div className="flex-1 flex flex-col justify-end pb-1">
+                  <label className="flex items-center gap-2 cursor-pointer group">
+                    <input type="checkbox" className="w-4 h-4 accent-brand-gold" checked={isFeatured} onChange={e => setIsFeatured(e.target.checked)} />
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500 group-hover:text-brand-gold transition-colors">Featured Product</span>
+                  </label>
+                </div>
+              </div>
+
               <div>
                 <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 ml-1">SEO Blueprint</label>
                 <input type="text" className="w-full bg-gray-50 border border-gray-100 p-4 rounded-2xl focus:border-brand-gold transition-all outline-none text-[11px] text-gray-500" placeholder="Keywords" value={keywords} onChange={e => setKeywords(e.target.value)} />
@@ -301,12 +328,13 @@ export default function AdminForm({ userEmail, initialProducts = [] }: { userEma
                     <tr className="text-[10px] font-bold uppercase tracking-widest text-gray-300 border-b border-gray-50">
                       <th className="p-6">Creation</th>
                       <th className="p-6">Collection</th>
+                      <th className="p-6">Status</th>
                       <th className="p-6 text-right">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50 text-sm">
                     {initialProducts.length === 0 ? (
-                      <tr><td colSpan={3} className="p-20 text-center text-gray-300 italic">No products found.</td></tr>
+                      <tr><td colSpan={4} className="p-20 text-center text-gray-300 italic">No products found.</td></tr>
                     ) : (
                       initialProducts.map(p => (
                         <tr key={p._id} className="group hover:bg-brand-gold/5 transition-all">
@@ -325,6 +353,13 @@ export default function AdminForm({ userEmail, initialProducts = [] }: { userEma
                             <span className="px-3 py-1 bg-brand-light text-brand-black rounded-lg text-[10px] font-bold uppercase tracking-widest">
                               {p.category}
                             </span>
+                          </td>
+                          <td className="p-6">
+                            <div className="flex items-center gap-2">
+                              <span className={`w-1.5 h-1.5 rounded-full ${p.status === 'published' ? 'bg-green-500' : p.status === 'draft' ? 'bg-yellow-500' : 'bg-gray-400'}`} />
+                              <span className="text-[10px] font-bold uppercase tracking-widest opacity-60">{p.status || 'published'}</span>
+                            </div>
+                            {p.isFeatured && <span className="text-[8px] text-brand-gold font-bold uppercase tracking-tighter mt-1 block">★ Featured</span>}
                           </td>
                           <td className="p-6 text-right space-x-2">
                              <button onClick={() => handleEdit(p)} className="text-blue-600 hover:underline font-bold text-[10px] uppercase">Edit</button>
